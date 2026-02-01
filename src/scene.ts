@@ -26,18 +26,23 @@ export function createScene() {
         for (let x = 0; x < city.size; x++) {
             const column = [];
             for (let y = 0; y < city.size; y++) {
-                // load tile
+                // grass 
                 const geometry = new THREE.BoxGeometry(1, 1, 1);
                 const material = new THREE.MeshLambertMaterial({ color: 0x00aa00 });
                 const mesh = new THREE.Mesh(geometry, material);
-                mesh.position.set(x, 0, y);
+                mesh.position.set(x, -0.5, y);
                 scene.add(mesh);
-
-                // add mesh to scene
-                scene.add(mesh)
-
-                // add mesh to meshes  array
                 column.push(mesh);
+
+                // building 
+                if (tile.building == 'building') {
+                    const buildingGeometry = new THREE.BoxGeometry(1, 1, 1);
+                    const buildingMaterial = new THREE.MeshLambertMaterial({ color: 0x777777 });
+                    const buildingMesh = new THREE.Mesh(buildingGeometry, buildingMaterial);
+                    buildingMesh.position.set(x, 0.5, y);
+                    scene.add(buildingMesh)
+                    column.push(buildingMesh);
+                }
             }
             meshes.push(column);
         }
