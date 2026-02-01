@@ -1,9 +1,12 @@
 
-import * as THREE from 'https://unpkg.com/three/build/three.module.js';
+import * as THREE from 'three';
 
 export function createScene() {
 
     const gameWindow = document.getElementById('render-target');
+    if (!gameWindow) {
+        throw new Error('render-target element not found in DOM');
+    }
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x777777);
 
