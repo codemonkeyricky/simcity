@@ -1,11 +1,13 @@
-html, body {
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+#root-window {
   height: 100%
 }
 
-root-window {
-  height: 100%
-}
-
-render-target {
+#render-target {
   height: 100%
 }
