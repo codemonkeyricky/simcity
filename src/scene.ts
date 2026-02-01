@@ -34,7 +34,7 @@ export function createScene() {
                 scene.add(mesh);
                 column.push(mesh);
 
-                // building 
+                const tile = city.data[x][y];
                 if (tile.building == 'building') {
                     const buildingGeometry = new THREE.BoxGeometry(1, 1, 1);
                     const buildingMaterial = new THREE.MeshLambertMaterial({ color: 0x777777 });

@@ -18,6 +18,8 @@ export function createCity(size) {
         }
     }
 
+    initialize();
+
     return {
         size,
         data
