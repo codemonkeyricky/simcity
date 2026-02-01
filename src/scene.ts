@@ -19,8 +19,8 @@ export function createScene() {
 
     console.log('Renderer size set to:', gameWindow.offsetWidth, 'x', gameWindow.offsetHeight);
 
-    let meshes = [];
-    function initialize(city) {
+    let meshes: any[] = [];
+    function initialize(city: { size: number; data: any[][] }) {
         scene.clear();
         meshes = [];
         for (let x = 0; x < city.size; x++) {

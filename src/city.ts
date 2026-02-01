@@ -1,12 +1,12 @@
 
-export function createCity(size) {
-    const data = [];
+export function createCity(size: number) {
+    const data: any[][] = [];
 
     function initialize() {
         for (let x = 0; x < size; x++) {
             const column = [];
             for (let y = 0; y < size; y++) {
-                const tile = { x, y, building: undefined };
+                const tile: { x: number; y: number; building?: string } = { x, y, building: undefined };
 
                 if (Math.random() > 0.7) {
                     tile.building = 'building';

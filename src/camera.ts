@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-export function createCamera(gameWindow) {
+export function createCamera(gameWindow: HTMLElement) {
     const DEG2RAD = Math.PI / 180;
     const LEFT_MOUSE_BUTTON = 0;
     const MIDDLE_MOUSE_BUTTON = 1;
