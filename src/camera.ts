@@ -10,6 +10,8 @@ export function createCamera(gameWindow) {
     const ROTATION_SENSITIVITY = 0.5;
     const ZOOM_SENSITIVITY = 0.02;
     const PAN_SENSITIVITY = -0.01;
+    const MIN_CAMERA_ELEVATION = 30;
+    const MAX_CAMERA_ELEVATION = 90;
 
     const Y_AXIS = new THREE.Vector3(0, 1, 0);
 
@@ -57,7 +59,7 @@ export function createCamera(gameWindow) {
         if (isLeftMouseDown) {
             cameraAzimuth += -(deltaX * ROTATION_SENSITIVITY);
             cameraElevation += (deltaY * ROTATION_SENSITIVITY);
-            cameraElevation = Math.min(180, Math.max(0, cameraElevation));
+            cameraElevation = Math.min(MAX_CAMERA_ELEVATION, Math.max(MIN_CAMERA_ELEVATION, cameraElevation));
             updateCameraPosition();
         } else if (isMiddleMouseDown) {
 
