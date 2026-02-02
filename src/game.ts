@@ -1,7 +1,7 @@
 
 
-import {createCity} from './src/city.ts';
-import {createScene} from './src/scene.ts';
+import {createCity} from './city.ts';
+import {createScene} from './scene.ts';
 
 export function createGame() {
     const scene = createScene();
@@ -17,7 +17,7 @@ export function createGame() {
     const game = {
         update() {
             city.update();
-            // scene.update(city);
+            scene.update(city);
         }
     }
 

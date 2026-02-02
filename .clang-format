@@ -1,6 +1,5 @@
 ---
 BasedOnStyle: Google
-Language: HTML
 IndentWidth: 4
 TabWidth: 4
 UseTab: Never
@@ -10,9 +9,8 @@ AllowShortIfStatementsOnASingleLine: Always
 AllowShortLoopsOnASingleLine: true
 SortIncludes: true
 IncludeBlocks: Preserve
-MaxEmptyLinesToKeep: 0
+MaxEmptyLinesToKeep: 1
 KeepEmptyLinesAtTheStartOfBlocks: false
 AllowAllParametersOfDeclarationOnNextLine: false
 AllowShortBlocksOnASingleLine: false
-KeepEmptyLinesAtTheEndOfBlocks: false
 ---

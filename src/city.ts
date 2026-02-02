@@ -12,12 +12,19 @@ export function createCity(size: number) {
                     x,
                     y,
                     building: undefined,
-                    update() { console.log('Updating tile at', this.x, this.y); }
+                    update() {
+                        const x = Math.random();
+                        if (x < 0.01) {
+                            if (this.building === undefined) {
+                                this.building = 'building-1';
+                            } else if (this.building = 'building-1') {
+                                this.building = 'building-2';
+                            } else if (this.building = 'building-2') {
+                                this.building = 'building-3';
+                            }
+                        }
+                    }
                 };
-
-                if (Math.random() > 0.7) {
-                    tile.building = 'building';
-                }
 
                 column.push(tile);
             }
@@ -26,6 +33,7 @@ export function createCity(size: number) {
     }
 
     function update() {
+        console.log('updating city');
         for (let x = 0; x < size; x++) {
             for (let y = 0; y < size; y++) {
                 data[x][y].update();
