@@ -4,7 +4,16 @@ import * as THREE from 'three';
 import {createAssetInstance} from './assets';
 import {createCamera} from './camera';
 
-export function createScene() {
+export function createScene(): {
+    onObjectSelected: ((selectedObject: THREE.Mesh) => void) | null;
+    initialize(city: {size: number; data: any[][]}): void;
+    update(city: {size: number; data: any[][]}): void;
+    start(): void;
+    stop(): void;
+    onMouseDown(event: MouseEvent): void;
+    onMouseUp(event: MouseEvent): void;
+    onMouseMove(event: MouseEvent): void;
+} {
     const gameWindow = document.getElementById('render-target');
     if (!gameWindow) {
         throw new Error('render-target element not found in DOM');
@@ -20,12 +29,12 @@ export function createScene() {
 
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
-    let selectedObject = undefined;
+    let selectedObject: THREE.Mesh | undefined = undefined;
 
     let terrain: THREE.Mesh[][] = [];
     let buildings: (THREE.Mesh|undefined)[][] = [];
 
-    let onObjectSelected = undefined;
+    let onObjectSelected: ((selectedObject: THREE.Mesh) => void) | null = null;
     function initialize(city: {size: number; data: any[][]}) {
         scene.clear();
         terrain = [];
@@ -98,14 +107,14 @@ export function createScene() {
         let intersection = raycaster.intersectObjects(scene.children, false);
         if (intersection.length > 0) {
             if (selectedObject) {
-                selectedObject.material.emissive.setHex(0x000000);
+                (selectedObject.material as THREE.MeshStandardMaterial).emissive.setHex(0x000000);
             }
-            selectedObject = intersection[0].object;
-            selectedObject.material.emissive.setHex(0x555555);
+            selectedObject = intersection[0].object as THREE.Mesh;
+            (selectedObject.material as THREE.MeshStandardMaterial).emissive.setHex(0x555555);
             console.log(selectedObject.userData);
 
-            if (this.onObjectSelected) {
-                this.onObjectSelected(selectedObject);
+            if (onObjectSelected) {
+                onObjectSelected(selectedObject);
             }
         }
     }
@@ -114,7 +123,16 @@ export function createScene() {
 
     function onMouseMove(event: MouseEvent) { camera.onMouseMove(event); }
 
-    return {
-        onObjectSelected, initialize, update, start, stop, onMouseDown, onMouseUp, onMouseMove
-    }
+    const sceneApi = {
+        onObjectSelected,
+        initialize,
+        update,
+        start,
+        stop,
+        onMouseDown,
+        onMouseUp,
+        onMouseMove
+    };
+
+    return sceneApi;
 }

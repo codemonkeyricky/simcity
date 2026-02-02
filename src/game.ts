@@ -8,7 +8,7 @@ export function createGame() {
     const city = createCity(16);
 
     scene.initialize(city);
-    scene.onObjectSelected = (selectedObject) => {
+    scene.onObjectSelected = (selectedObject: any) => {
         // console.log(selectedObject.userData);
 
         let {x, y} = selectedObject.userData;
