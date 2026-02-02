@@ -1,7 +1,7 @@
 
 import * as THREE from 'three';
 
-const geometry = new THREE.BoxGeometry(1, 1, 1);
+export const geometry = new THREE.BoxGeometry(1, 1, 1);
 
 const assets = {
     'grass': (x, y) => {
@@ -9,12 +9,14 @@ const assets = {
         const material = new THREE.MeshLambertMaterial({color: 0x00aa00});
         const mesh = new THREE.Mesh(geometry, material);
         mesh.position.set(x, -0.5, y);
+        return mesh;
     },
     'building-1': (x, y) => {
         const height = 1;
         const buildingMaterial = new THREE.MeshLambertMaterial({color: 0x777777});
         const buildingMesh = new THREE.Mesh(geometry, buildingMaterial);
         buildingMesh.position.set(x, height / 2, y);
+        return buildingMesh;
     },
     'building-2': (x, y) => {
         const height = 2;
@@ -22,6 +24,7 @@ const assets = {
         const buildingMesh = new THREE.Mesh(geometry, buildingMaterial);
         buildingMesh.scale.set(1, height, 1);
         buildingMesh.position.set(x, height / 2, y);
+        return buildingMesh;
     },
     'building-3': (x, y) => {
         const height = 3;
@@ -29,6 +32,7 @@ const assets = {
         const buildingMesh = new THREE.Mesh(geometry, buildingMaterial);
         buildingMesh.scale.set(1, height, 1);
         buildingMesh.position.set(x, height / 2, y);
+        return buildingMesh;
     },
 }
 
@@ -37,6 +41,6 @@ export function createAssetInstance(assetId, x, y) {
         return assets[assetId](x, y);
     } else {
         console.warn('Asset not found:', assetId);
-        return undefined
+        return undefined;
     }
 }
