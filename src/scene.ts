@@ -1,6 +1,7 @@
 
 import * as THREE from 'three';
 
+import {createAssetInstance} from './assets';
 import {createCamera} from './camera';
 
 export function createScene() {
@@ -29,11 +30,7 @@ export function createScene() {
         for (let x = 0; x < city.size; x++) {
             const column = [];
             for (let y = 0; y < city.size; y++) {
-                // grass
-                const geometry = new THREE.BoxGeometry(1, 1, 1);
-                const material = new THREE.MeshLambertMaterial({color: 0x00aa00});
-                const mesh = new THREE.Mesh(geometry, material);
-                mesh.position.set(x, -0.5, y);
+                const mesh = createAssetInstance('grass', x, y);
                 scene.add(mesh);
                 column.push(mesh);
             }
@@ -48,18 +45,14 @@ export function createScene() {
             for (let y = 0; y < city.size; y++) {
                 const tile = city.data[x][y];
                 if (tile.building && tile.building.startsWith('building')) {
-                    const height = Number(tile.building.slice(-1));
-                    const buildingGeometry = new THREE.BoxGeometry(1, height, 1);
-                    const buildingMaterial = new THREE.MeshLambertMaterial({color: 0x777777});
-                    const buildingMesh = new THREE.Mesh(buildingGeometry, buildingMaterial);
-                    buildingMesh.position.set(x, height / 2, y);
+                    const mesh = createAssetInstance(tile.building, x, y);
 
                     if (buildings[x][y]) {
                         scene.remove(buildings[x][y]);
                     }
 
-                    scene.add(buildingMesh)
-                    buildings[x][y] = buildingMesh;
+                    scene.add(mesh)
+                    buildings[x][y] = mesh;
                 }
             }
         }
