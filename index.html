@@ -1,37 +1,33 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="main.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="main.css" />
     <title>SimCity Scene</title>
+  </head>
 
-</head>
-
-<body>
+  <body>
     <div id="root-window">
-        <div id="render-target">
-            <button ></button>
-            <button></button>
-            <button></button>
-            <button></button>
-            <button></button>
-
+      <div id="render-target">
+        <div id="ui-toolbar">
+          <button id="button-bulldoze" class="ui-button selected">
+            BULLDOZE
+          </button>
+          <button id="button-residential" class="ui-button">RESIDENTIAL</button>
+          <button id="button-commercial" class="ui-button">COMMERCIAL</button>
+          <button id="button-industrial" class="ui-button">INDUSTRIAL</button>
+          <button id="button-road" class="ui-button">ROAD</button>
         </div>
-
+      </div>
     </div>
 
     <script type="module">
-        import { createGame } from './src/game.ts';
+      import { createGame } from "./src/game.ts";
 
-        window.onload = () => {
-            window.game = createGame()
-        }
-
-
+      window.onload = () => {
+        window.game = createGame();
+      };
     </script>
-
-</body>
-
+  </body>
 </html>
