@@ -11,11 +11,16 @@ export function createGame() {
 
     scene.initialize(city);
     scene.onObjectSelected = (selectedObject: any) => {
-        // console.log(selectedObject.userData);
-
         let {x, y} = selectedObject.userData;
         const tile = city.data[x][y];
-        console.log(tile);
+
+        if (activeToolId === 'bulldoze') {
+            tile.buildingId = undefined;
+            scene.update(city)
+        } else if (!tile.buildingId) {
+            tile.buildingId = activeToolId;
+            scene.update(city)
+        }
     };
 
     document.addEventListener('mousedown', scene.onMouseDown.bind(scene), false);

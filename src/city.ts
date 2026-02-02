@@ -29,17 +29,6 @@ export function createCity(size: number) {
 
 function createTile(x: number, y: number) {
     return {
-        x, y, terrainId: 'grass', buildingId: undefined as string | undefined, update() {
-            const random = Math.random();
-            if (random < 0.01) {
-                if (!this.buildingId) {
-                    this.buildingId = 'building-1';
-                } else if (this.buildingId === 'building-1') {
-                    this.buildingId = 'building-2';
-                } else if (this.buildingId === 'building-2') {
-                    this.buildingId = 'building-3';
-                }
-            }
-        }
+        x, y, terrainId: 'grass', buildingId: undefined as string|undefined, update() {}
     }
 };
