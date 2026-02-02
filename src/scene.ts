@@ -18,17 +18,16 @@ export function createScene() {
     renderer.setSize(gameWindow.offsetWidth, gameWindow.offsetHeight);
     gameWindow.appendChild(renderer.domElement);
 
-    console.log('Renderer size set to:', gameWindow.offsetWidth, 'x', gameWindow.offsetHeight);
 
-    let terrain: any[] = [];
-    let buildings = [];
+    let terrain: THREE.Mesh[][] = [];
+    let buildings: (THREE.Mesh | undefined)[][] = [];
 
     function initialize(city: {size: number; data: any[][]}) {
         scene.clear();
         terrain = [];
         buildings = [];
         for (let x = 0; x < city.size; x++) {
-            const column = [];
+            const column: THREE.Mesh[] = [];
             for (let y = 0; y < city.size; y++) {
                 const terrainId = city.data[x][y].terrainId;
                 const mesh = createAssetInstance(terrainId, x, y);
@@ -41,21 +40,27 @@ export function createScene() {
         setupLights();
     }
 
-    function update(city) {
+    function update(city: {size: number; data: any[][]}) {
         for (let x = 0; x < city.size; x++) {
             for (let y = 0; y < city.size; y++) {
                 const currentBuildingId = buildings[x][y]?.userData.id;
                 const newBuildingId = city.data[x][y].buildingId;
 
                 if (!newBuildingId && currentBuildingId) {
-                    scene.remove(buildings[x][y]);
-                    buildings[x][y] = undefined;
+                    const building = buildings[x][y];
+                    if (building) {
+                        scene.remove(building);
+                        buildings[x][y] = undefined;
+                    }
                 }
 
                 if (newBuildingId !== currentBuildingId) {
-                    scene.remove(buildings[x][y]);
+                    const building = buildings[x][y];
+                    if (building) {
+                        scene.remove(building);
+                    }
                     buildings[x][y] = createAssetInstance(newBuildingId, x, y);
-                    scene.add(buildings[x][y]);
+                    scene.add(buildings[x][y]!);
                 }
             }
         }
