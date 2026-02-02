@@ -5,7 +5,7 @@ import {createScene} from './scene.ts';
 
 export function createGame() {
     const scene = createScene();
-    const city = createCity(8);
+    const city = createCity(16);
 
     scene.initialize(city);
 

@@ -25,6 +25,7 @@ export function createScene() {
     function initialize(city: {size: number; data: any[][]}) {
         scene.clear();
         terrain = [];
+        buildings = [];
         for (let x = 0; x < city.size; x++) {
             const column = [];
             for (let y = 0; y < city.size; y++) {
@@ -54,7 +55,7 @@ export function createScene() {
                     buildingMesh.position.set(x, height / 2, y);
 
                     if (buildings[x][y]) {
-                        scene.remove(building[x][y]);
+                        scene.remove(buildings[x][y]);
                     }
 
                     scene.add(buildingMesh)
