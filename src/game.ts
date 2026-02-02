@@ -4,6 +4,8 @@ import {createCity} from './city.ts';
 import {createScene} from './scene.ts';
 
 export function createGame() {
+    let activeToolId = '';
+
     const scene = createScene();
     const city = createCity(16);
 
@@ -25,6 +27,10 @@ export function createGame() {
         update() {
             city.update();
             scene.update(city);
+        },
+        setActiveToolId(toolId: string) {
+            activeToolId = toolId;
+            console.log(activeToolId);
         }
     }
 
