@@ -4,7 +4,7 @@ import {createCity} from './city.ts';
 import {createScene} from './scene.ts';
 
 export function createGame() {
-    let activeToolId = '';
+    let activeToolId = 'bulldoze';
 
     const scene = createScene();
     const city = createCity(16);
@@ -17,7 +17,7 @@ export function createGame() {
         if (activeToolId === 'bulldoze') {
             tile.buildingId = undefined;
             scene.update(city)
-        } else if (!tile.buildingId) {
+        } else if (!tile.buildingId && activeToolId) {
             tile.buildingId = activeToolId;
             scene.update(city)
         }

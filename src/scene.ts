@@ -5,7 +5,7 @@ import {createAssetInstance} from './assets';
 import {createCamera} from './camera';
 
 export function createScene(): {
-    onObjectSelected: ((selectedObject: THREE.Mesh) => void) | null;
+    onObjectSelected: ((selectedObject: THREE.Mesh) => void)|null;
     initialize(city: {size: number; data: any[][]}): void;
     update(city: {size: number; data: any[][]}): void;
     start(): void;
@@ -29,12 +29,12 @@ export function createScene(): {
 
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
-    let selectedObject: THREE.Mesh | undefined = undefined;
+    let selectedObject: THREE.Mesh|undefined = undefined;
 
     let terrain: THREE.Mesh[][] = [];
     let buildings: (THREE.Mesh|undefined)[][] = [];
 
-    let onObjectSelected: ((selectedObject: THREE.Mesh) => void) | null = null;
+    // onObjectSelected will be a property on the returned object
     function initialize(city: {size: number; data: any[][]}) {
         scene.clear();
         terrain = [];
@@ -72,8 +72,12 @@ export function createScene(): {
                     if (building) {
                         scene.remove(building);
                     }
-                    buildings[x][y] = createAssetInstance(newBuildingId, x, y);
-                    scene.add(buildings[x][y]!);
+                    if (newBuildingId) {
+                        buildings[x][y] = createAssetInstance(newBuildingId, x, y);
+                        scene.add(buildings[x][y]!);
+                    } else {
+                        buildings[x][y] = undefined;
+                    }
                 }
             }
         }
@@ -98,7 +102,7 @@ export function createScene(): {
 
     function stop() { renderer.setAnimationLoop(null); }
 
-    function onMouseDown(event: MouseEvent) {
+    function onMouseDown(this: { onObjectSelected: ((selectedObject: THREE.Mesh) => void)|null }, event: MouseEvent) {
         camera.onMouseDown(event);
         mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
         mouse.y = -(event.clientY / renderer.domElement.clientHeight) * 2 + 1;
@@ -113,8 +117,8 @@ export function createScene(): {
             (selectedObject.material as THREE.MeshStandardMaterial).emissive.setHex(0x555555);
             console.log(selectedObject.userData);
 
-            if (onObjectSelected) {
-                onObjectSelected(selectedObject);
+            if (this.onObjectSelected) {
+                this.onObjectSelected(selectedObject);
             }
         }
     }
@@ -124,7 +128,7 @@ export function createScene(): {
     function onMouseMove(event: MouseEvent) { camera.onMouseMove(event); }
 
     const sceneApi = {
-        onObjectSelected,
+        onObjectSelected: null,
         initialize,
         update,
         start,
