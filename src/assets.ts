@@ -8,6 +8,7 @@ const assets = {
         // grass
         const material = new THREE.MeshLambertMaterial({color: 0x00aa00});
         const mesh = new THREE.Mesh(geometry, material);
+        mesh.userData = {id: 'grass'};
         mesh.position.set(x, -0.5, y);
         return mesh;
     },
