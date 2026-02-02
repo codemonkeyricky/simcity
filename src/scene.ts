@@ -18,10 +18,14 @@ export function createScene() {
     renderer.setSize(gameWindow.offsetWidth, gameWindow.offsetHeight);
     gameWindow.appendChild(renderer.domElement);
 
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    let selectedObject = undefined;
 
     let terrain: THREE.Mesh[][] = [];
-    let buildings: (THREE.Mesh | undefined)[][] = [];
+    let buildings: (THREE.Mesh|undefined)[][] = [];
 
+    let onObjectSelected = undefined;
     function initialize(city: {size: number; data: any[][]}) {
         scene.clear();
         terrain = [];
@@ -85,11 +89,32 @@ export function createScene() {
 
     function stop() { renderer.setAnimationLoop(null); }
 
-    function onMouseDown(event: MouseEvent) { camera.onMouseDown(event); }
+    function onMouseDown(event: MouseEvent) {
+        camera.onMouseDown(event);
+        mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
+        mouse.y = -(event.clientY / renderer.domElement.clientHeight) * 2 + 1;
+
+        raycaster.setFromCamera(mouse, camera.camera);
+        let intersection = raycaster.intersectObjects(scene.children, false);
+        if (intersection.length > 0) {
+            if (selectedObject) {
+                selectedObject.material.emissive.setHex(0x000000);
+            }
+            selectedObject = intersection[0].object;
+            selectedObject.material.emissive.setHex(0x555555);
+            console.log(selectedObject.userData);
+
+            if (this.onObjectSelected) {
+                this.onObjectSelected(selectedObject);
+            }
+        }
+    }
 
     function onMouseUp(event: MouseEvent) { camera.onMouseUp(event); }
 
     function onMouseMove(event: MouseEvent) { camera.onMouseMove(event); }
 
-    return { initialize, update, start, stop, onMouseDown, onMouseUp, onMouseMove }
+    return {
+        onObjectSelected, initialize, update, start, stop, onMouseDown, onMouseUp, onMouseMove
+    }
 }

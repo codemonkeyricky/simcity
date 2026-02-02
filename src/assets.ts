@@ -10,7 +10,7 @@ const assets: Record<string, AssetFactory> = {
         // grass
         const material = new THREE.MeshLambertMaterial({color: 0x00aa00});
         const mesh = new THREE.Mesh(geometry, material);
-        mesh.userData = {id: 'grass'};
+        mesh.userData = {id: 'grass', x, y};
         mesh.position.set(x, -0.5, y);
         return mesh;
     },
@@ -19,6 +19,7 @@ const assets: Record<string, AssetFactory> = {
         const buildingMaterial = new THREE.MeshLambertMaterial({color: 0x777777});
         const buildingMesh = new THREE.Mesh(geometry, buildingMaterial);
         buildingMesh.position.set(x, height / 2, y);
+        buildingMesh.userData = {id: 'building-1', x, y};
         return buildingMesh;
     },
     'building-2': (x: number, y: number) => {
@@ -27,6 +28,7 @@ const assets: Record<string, AssetFactory> = {
         const buildingMesh = new THREE.Mesh(geometry, buildingMaterial);
         buildingMesh.scale.set(1, height, 1);
         buildingMesh.position.set(x, height / 2, y);
+        buildingMesh.userData = {id: 'building-2', x, y};
         return buildingMesh;
     },
     'building-3': (x: number, y: number) => {
@@ -35,15 +37,18 @@ const assets: Record<string, AssetFactory> = {
         const buildingMesh = new THREE.Mesh(geometry, buildingMaterial);
         buildingMesh.scale.set(1, height, 1);
         buildingMesh.position.set(x, height / 2, y);
+        buildingMesh.userData = {id: 'building-3', x, y};
         return buildingMesh;
     },
 }
 
-export function createAssetInstance(assetId: string, x: number, y: number): THREE.Mesh {
-    if (assetId in assets) {
-        return assets[assetId](x, y);
-    } else {
-        console.warn('Asset not found:', assetId);
-        throw new Error(`Asset not found: ${assetId}`);
-    }
-}
+                                             export function createAssetInstance(
+                                                 assetId: string, x: number,
+                                                 y: number): THREE.Mesh {
+                                                 if (assetId in assets) {
+                                                     return assets[assetId](x, y);
+                                                 } else {
+                                                     console.warn('Asset not found:', assetId);
+                                                     throw new Error(`Asset not found: ${assetId}`);
+                                                 }
+                                             }
